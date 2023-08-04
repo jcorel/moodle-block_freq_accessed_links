@@ -15,16 +15,23 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Languages configuration for the block_freq_accessed_links plugin.
+ * Plugin functions for the block_freq_accessed_links plugin.
  *
  * @package   block_freq_accessed_links
  * @copyright 2023, Brain Station 23
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['pluginname'] = 'Frequently Accessed Links';
-$string['pluginname:addinstance'] = 'Add a new freq_accessed_links block';
-$string['pluginname:myaddinstance'] = 'Add a new freq_accessed_links block to the My Moodle page';
-$string['number'] = 'No.';
-$string['title'] = 'Title';
-$string['occurrences'] = 'Occurrences';
+ defined('MOODLE_INTERNAL') || die();
+
+ function block_freq_accessed_links_before_footer() {
+    global $PAGE, $USER, $DB;
+
+    $record = new stdClass();
+    $record->user_id = $USER->id;
+    $record->url = "" . $PAGE->url;
+    $record->title = $PAGE->title;
+    $record->time_created = time();
+
+    $DB->insert_record('block_freq_accessed_links', $record);
+ }

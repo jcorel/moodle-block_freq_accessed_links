@@ -19,4 +19,21 @@
     }
 }}
 
-<h1> Hello </h1>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th> {{#str}} number, block_freq_accessed_links {{/str}} </th>
+      <th> {{#str}} title, block_freq_accessed_links {{/str}}  </th>
+      <th> {{#str}} occurrences, block_freq_accessed_links {{/str}}  </th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#records}}
+        <tr>
+            <td> {{index}} </td>
+            <td> <a href={{url}}> {{title}} </a> </td>
+            <td> {{occurrences}} </td>
+        </tr>
+    {{/records}}
+  </tbody>
+</table>

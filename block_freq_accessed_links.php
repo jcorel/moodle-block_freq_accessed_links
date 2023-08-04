@@ -18,9 +18,11 @@
  * Block definition class for the block_freq_accessed_links plugin.
  *
  * @package   block_freq_accessed_links
- * @copyright Year, You Name <your@email.address>
+ * @copyright 2023, Brain Station 23
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
+require_once('lib.php');
 
 class block_freq_accessed_links extends block_base {
 
@@ -49,12 +51,36 @@ class block_freq_accessed_links extends block_base {
         $this->content->footer = '';
 
         // Add logic here to define your template data or any other content.
-        $data = ['YOUR DATA GOES HERE'];
+        $records = $this->get_url_records();
 
-        $this->content->text = $OUTPUT->render_from_template('block_freq_accessed_links/content', $data);
+        $index = 1;
+        foreach($records as $record) {
+            $record->index = $index;
+            $index++;
+        }
+
+        $templatecontext = [
+            'records' => array_values($records)
+        ];
+
+        $this->content->text = $OUTPUT->render_from_template('block_freq_accessed_links/content', $templatecontext);
 
         return $this->content;
     }
+
+    function get_url_records() {
+        global $USER, $DB;
+    
+        $query = "SELECT *, COUNT(*) AS occurrences
+        FROM {block_freq_accessed_links}
+        WHERE user_id=:id
+        GROUP BY url
+        ORDER BY occurrences DESC";
+    
+        $records = $DB->get_records_sql($query, ['id' => $USER->id]);
+    
+        return $records;
+     }
 
     function has_config() {
         return true;
