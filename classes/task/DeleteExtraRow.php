@@ -15,17 +15,37 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Languages configuration for the block_freq_accessed_links plugin.
+ * Task schedule configuration for the plugintype_pluginname plugin.
  *
  * @package   block_freq_accessed_links
  * @copyright 2023, Brain Station 23
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['pluginname'] = 'Frequently Accessed Links';
-$string['pluginname:addinstance'] = 'Add a new freq_accessed_links block';
-$string['pluginname:myaddinstance'] = 'Add a new freq_accessed_links block to the My Moodle page';
-$string['number'] = 'No.';
-$string['title'] = 'Title';
-$string['occurrences'] = 'Occurrences';
-$string['delete_extra_row'] = 'Delete Extra Row';
+namespace block_freq_accessed_links\task;
+
+/**
+ * An example of a scheduled task.
+ */
+class DeleteExtraRow extends \core\task\scheduled_task {
+
+    /**
+     * Return the task's name as shown in admin screens.
+     *
+     * @return string
+     */
+    public function get_name() {
+        return get_string('delete_extra_row', 'block_freq_accessed_links');
+    }
+
+    /**
+     * Execute the task.
+     */
+    public function execute() {
+        global $USER, $DB;
+        $query = "DELETE FROM {block_freq_accessed_links} WHERE id <
+        (SELECT MIN(m.id) FROM (SELECT id FROM {block_freq_accessed_links} WHERE user_id=:id ORDER BY time_created DESC LIMIT 100) m)";
+
+        $DB->execute($query, ['id' => $USER->id]);
+    }
+}

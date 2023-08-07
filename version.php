@@ -25,5 +25,5 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'block_freq_accessed_links';
-$plugin->version = 2023080400;
+$plugin->version = 2023080403;
 $plugin->requires = 2020061500;

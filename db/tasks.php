@@ -15,17 +15,21 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Languages configuration for the block_freq_accessed_links plugin.
+ * Task schedule configuration for the plugintype_pluginname plugin.
  *
  * @package   block_freq_accessed_links
  * @copyright 2023, Brain Station 23
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['pluginname'] = 'Frequently Accessed Links';
-$string['pluginname:addinstance'] = 'Add a new freq_accessed_links block';
-$string['pluginname:myaddinstance'] = 'Add a new freq_accessed_links block to the My Moodle page';
-$string['number'] = 'No.';
-$string['title'] = 'Title';
-$string['occurrences'] = 'Occurrences';
-$string['delete_extra_row'] = 'Delete Extra Row';
+$tasks = [
+    [
+        'classname' => 'block_freq_accessed_links\task\DeleteExtraRow',
+        'blocking' => 0,
+        'minute' => '5',
+        'hour' => '*',
+        'day' => '*',
+        'month' => '*',
+        'dayofweek' => '*',
+    ],
+];
