@@ -70,12 +70,19 @@ class block_freq_accessed_links extends block_base {
 
     function get_url_records() {
         global $USER, $DB;
+
+        $limit = get_config('block_freq_accessed_links', 'numrows');
+
+        if ($limit <= 0) {
+            $limit = 5;
+        }
     
         $query = "SELECT *, COUNT(*) AS occurrences
         FROM {block_freq_accessed_links}
         WHERE user_id=:id
         GROUP BY url
-        ORDER BY occurrences DESC";
+        ORDER BY occurrences DESC
+        LIMIT $limit";
     
         $records = $DB->get_records_sql($query, ['id' => $USER->id]);
     

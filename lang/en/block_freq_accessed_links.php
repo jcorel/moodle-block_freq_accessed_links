@@ -29,3 +29,5 @@ $string['number'] = 'No.';
 $string['title'] = 'Title';
 $string['occurrences'] = 'Occurrences';
 $string['delete_extra_row'] = 'Delete Extra Row';
+$string['num_rows'] = 'Number of links';
+$string['num_rows_long'] = 'Number of links you want to see in the block';
