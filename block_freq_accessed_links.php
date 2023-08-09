@@ -22,6 +22,8 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+ defined('MOODLE_INTERNAL') || die();
+
 require_once('lib.php');
 
 class block_freq_accessed_links extends block_base {
@@ -54,7 +56,7 @@ class block_freq_accessed_links extends block_base {
         $records = $this->get_url_records();
 
         $index = 1;
-        foreach($records as $record) {
+        foreach ($records as $record) {
             $record->index = $index;
             $index++;
         }
@@ -68,7 +70,7 @@ class block_freq_accessed_links extends block_base {
         return $this->content;
     }
 
-    function get_url_records() {
+    private function get_url_records() {
         global $USER, $DB;
 
         $limit = get_config('block_freq_accessed_links', 'numrows');
@@ -76,20 +78,20 @@ class block_freq_accessed_links extends block_base {
         if ($limit <= 0) {
             $limit = 5;
         }
-    
+
         $query = "SELECT *, COUNT(*) AS occurrences
         FROM {block_freq_accessed_links}
         WHERE user_id=:id
         GROUP BY url
         ORDER BY occurrences DESC
         LIMIT $limit";
-    
-        $records = $DB->get_records_sql($query, ['id' => $USER->id]);
-    
-        return $records;
-     }
 
-    function has_config() {
+        $records = $DB->get_records_sql($query, ['id' => $USER->id]);
+
+        return $records;
+    }
+
+    public function has_config() {
         return true;
     }
 

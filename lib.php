@@ -22,9 +22,7 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
- defined('MOODLE_INTERNAL') || die();
-
- function block_freq_accessed_links_before_footer() {
+function block_freq_accessed_links_before_footer() {
     global $PAGE, $USER, $DB;
 
     $record = new stdClass();
@@ -34,4 +32,4 @@
     $record->time_created = time();
 
     $DB->insert_record('block_freq_accessed_links', $record);
- }
+}

@@ -44,7 +44,8 @@ class DeleteExtraRow extends \core\task\scheduled_task {
     public function execute() {
         global $USER, $DB;
         $query = "DELETE FROM {block_freq_accessed_links} WHERE id <
-        (SELECT MIN(m.id) FROM (SELECT id FROM {block_freq_accessed_links} WHERE user_id=:id ORDER BY time_created DESC LIMIT 100) m)";
+        (SELECT MIN(m.id) FROM (SELECT id FROM {block_freq_accessed_links}
+        WHERE user_id=:id ORDER BY time_created DESC LIMIT 100) m)";
 
         $DB->execute($query, ['id' => $USER->id]);
     }
