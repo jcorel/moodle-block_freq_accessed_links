@@ -14,6 +14,9 @@
             <KEYS>
                 <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
             </KEYS>
+            <INDEXES>
+                <INDEX NAME="blockfreql_use_ix" UNIQUE="false" FIELDS="user_id"/>
+            </INDEXES>
         </TABLE>
     </TABLES>
 </XMLDB>
