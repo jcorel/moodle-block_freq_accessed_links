@@ -83,10 +83,10 @@ class block_freq_accessed_links extends block_base {
         FROM {block_freq_accessed_links}
         WHERE user_id=:id
         GROUP BY url
-        ORDER BY occurrences DESC
-        LIMIT $limit";
-
-        $records = $DB->get_records_sql($query, ['id' => $USER->id]);
+        ORDER BY occurrences DESC";
+        
+        $params = ['id' => $USER->id];
+        $records = $DB->get_records_sql($query, $params, 0, $limit);
 
         return $records;
     }
